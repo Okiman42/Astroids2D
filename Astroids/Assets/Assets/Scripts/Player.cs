@@ -19,12 +19,18 @@ public class Player : MonoBehaviour
     public bool shouldShoot = true;
 
     private float _turnDirection;
+    private float shootCounter = 0;
+
+    public int fireRate = 10;
     #endregion
 
     private void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
+        PauseMenu.gameIsPaused = false;
     }
+
+    
 
     private void Update()
     {
@@ -41,15 +47,18 @@ public class Player : MonoBehaviour
             _turnDirection = 0.0f;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && shootCounter > fireRate)
         {
-            Shoot();    
+            Shoot();
+            shootCounter = 0;
         }
 
     }
 
     private void FixedUpdate()
     {
+        shootCounter++;
+
         //Handeling movement and rotation
         if (_thrusting)
         {

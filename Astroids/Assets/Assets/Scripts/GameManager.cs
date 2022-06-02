@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("highscore", resetScore);
         }
+
     }
  
     public void AsteroidDestroyed(Asteroid asteroid)
@@ -161,6 +162,9 @@ public class GameManager : MonoBehaviour
         if (currentScore > PlayerPrefs.GetInt("highscore"))
         {
             PlayerPrefs.SetInt("highscore", currentScore);
+
+            if (currentScore > 10000 && PlayerPrefs.GetInt("hasNoLife", 0) == 0)
+                PlayerPrefs.SetInt("hasNoLife", 1);
         }
 
         GameOverScreen.Setup(currentScore);
